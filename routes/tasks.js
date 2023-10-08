@@ -6,7 +6,8 @@ const {
   getTask,
   updateTask,
   deleteTask,
-} = require("../controllers");
+} = require("../controllers/tasks");
+
 router.route("/").get(getAllTasks).post(creatTask);
 router.route("/:id").get(getTask).patch(updateTask).delete(deleteTask);
 

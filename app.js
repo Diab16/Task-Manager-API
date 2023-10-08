@@ -5,7 +5,7 @@ require("dotenv").config();
 const app = express();
 
 // apply middlewares
-app.use(express.json);
+app.use(express.json());
 
 // Routers
 app.use("/api/v1/tasks", require("./routes/tasks"));
