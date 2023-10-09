@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-
+const { Book, Task } = require("../models/Task");
 /**
  * @desc   Get All Books
  * @route  /api/v1/tasks
@@ -17,7 +17,12 @@ const getAllTasks = (req, res) => {
  * @access public
  */
 const creatTask = asyncHandler(async (req, res) => {
-  res.status(200).send("creat new task");
+  const task = new Task({
+    content: req.body.content,
+    completed: req.body.completed,
+  });
+  const result = await task.save(task);
+  res.status(201).json(result);
 });
 
 /**
