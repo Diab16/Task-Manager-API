@@ -34,7 +34,11 @@ const creatTask = asyncHandler(async (req, res) => {
  */
 const getTask = asyncHandler(async (req, res) => {
   const task = await Task.findById(req.params.id);
-  res.status(200).send(task);
+  if (task) {
+    res.status(200).send(task);
+  } else {
+    res.status(404).json({ message: "task not found" });
+  }
 });
 
 /**
@@ -57,9 +61,9 @@ const deleteTask = asyncHandler(async (req, res) => {
   const task = await Task.findById(req.params.id);
   if (task) {
     await Task.findByIdAndDelete(req.params.id);
-    res.json({ message: "task has been deleted" });
+    res.status(204).json({ message: "task has been deleted" });
   } else {
-    res.json({ message: "task not found" });
+    res.status(404).json({ message: "task not found" });
   }
 });
 
