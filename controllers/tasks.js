@@ -54,7 +54,13 @@ const updateTask = asyncHandler(async (req, res) => {
  * @access public
  */
 const deleteTask = asyncHandler(async (req, res) => {
-  res.status(200).send("Delete Task");
+  const task = await Task.findById(req.params.id);
+  if (task) {
+    await Task.findByIdAndDelete(req.params.id);
+    res.json({ message: "task has been deleted" });
+  } else {
+    res.json({ message: "task not found" });
+  }
 });
 
 module.exports = { getAllTasks, creatTask, getTask, updateTask, deleteTask };
