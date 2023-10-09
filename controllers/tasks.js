@@ -6,9 +6,10 @@ const { Book, Task } = require("../models/Task");
  * @method GET
  * @access public
  */
-const getAllTasks = (req, res) => {
-  res.status(200).send("get all books");
-};
+const getAllTasks = asyncHandler(async (req, res) => {
+  const taskList = await Task.find();
+  res.status(200).json(taskList);
+});
 
 /**
  * @desc   Creat New Task
