@@ -33,7 +33,8 @@ const creatTask = asyncHandler(async (req, res) => {
  * @access public
  */
 const getTask = asyncHandler(async (req, res) => {
-  res.status(200).send("Get Task by ID");
+  const task = await Task.findById(req.params.id);
+  res.status(200).send(task);
 });
 
 /**
