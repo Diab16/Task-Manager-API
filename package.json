@@ -1,7 +1,7 @@
 {
-  "name": "task-manger-api",
+  "name": "task-manager-api",
   "version": "1.0.0",
-  "description": "task manger API built using NodeJS &amp; Express &amp; MongoDB",
+  "description": "task manager API built using NodeJS &amp; Express &amp; MongoDB",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app"
@@ -11,7 +11,8 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "express-async-handler": "^1.2.0"
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^7.6.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

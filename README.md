@@ -1,2 +1,3 @@
-# Task-Manger-API
-task manger API built using NodeJS &amp; Express &amp; MongoDB
+# Task-Manager-API
+
+task manager API built using NodeJS &amp; Express &amp; MongoDB
