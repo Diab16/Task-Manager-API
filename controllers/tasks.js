@@ -55,7 +55,10 @@ const getTask = asyncHandler(async (req, res) => {
 const updateTask = asyncHandler(async (req, res) => {
   let task = await Task.findById(req.params.id);
   if (task) {
-    task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     res.status(200).json(task);
   } else {
     res.status(404).json({ message: "task not found" });
