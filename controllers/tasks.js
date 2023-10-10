@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { Book, Task } = require("../models/Task");
+const e = require("express");
 /**
  * @desc   Get All Books
  * @route  /api/v1/tasks
@@ -8,7 +9,11 @@ const { Book, Task } = require("../models/Task");
  */
 const getAllTasks = asyncHandler(async (req, res) => {
   const taskList = await Task.find();
-  res.status(200).json(taskList);
+  if (taskList) {
+    res.status(200).json(taskList);
+  } else {
+    res.status(404).json({ message: "there is no tasks" });
+  }
 });
 
 /**
@@ -48,7 +53,13 @@ const getTask = asyncHandler(async (req, res) => {
  * @access public
  */
 const updateTask = asyncHandler(async (req, res) => {
-  res.status(200).send("Update Task");
+  let task = await Task.findById(req.params.id);
+  if (task) {
+    task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.status(200).json(task);
+  } else {
+    res.status(404).json({ message: "task not found" });
+  }
 });
 
 /**
