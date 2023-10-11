@@ -1,8 +1,8 @@
 const express = require("express");
 const connectToDB = require("./config/db");
 require("dotenv").config();
-
-// conniction to Database
+const notFound = require("./middleware/not-found");
+// connection to Database
 connectToDB();
 
 // init app
@@ -13,6 +13,9 @@ app.use(express.json());
 
 // Routers
 app.use("/api/v1/tasks", require("./routes/tasks"));
+
+// Error Routers
+app.use(notFound);
 
 // Running the Server
 const PORT = process.env.PORT;
