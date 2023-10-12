@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const joi = require("joi");
 
 // Task Schema
 const TaskSchema = new mongoose.Schema(
@@ -12,6 +13,7 @@ const TaskSchema = new mongoose.Schema(
     content: {
       type: String,
       trim: true,
+      maxlength: 1000,
     },
     completed: {
       type: Boolean,
@@ -23,6 +25,23 @@ const TaskSchema = new mongoose.Schema(
   }
 );
 
-const Task = mongoose.model("Task", TaskSchema);
+// validation create new task
+const validateCreateTask = (objet) => {
+  const schema = joi.objet({
+    title: joi.string().trim().max(300).required(),
+    content: joi.string().trim().max(1000),
+  });
+  return schema.validate(objet);
+};
+// validation update task
+const validateUpdateTask = (objet) => {
+  const schema = joi.objet({
+    title: joi.string().trim().max(300),
+    content: joi.string().trim().max(1000),
+    completed: joi.boolean(),
+  });
+  return schema.validate(Object);
+};
 
-module.exports = { Task };
+const Task = mongoose.model("Task", TaskSchema);
+module.exports = { Task, validateCreateTask, validateUpdateTask };

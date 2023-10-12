@@ -1,8 +1,12 @@
 const asyncHandler = require("express-async-handler");
-const { Book, Task } = require("../models/Task");
-const e = require("express");
+const {
+  Task,
+  validateCreateTask,
+  validateUpdateTask,
+} = require("../models/Task");
+
 /**
- * @desc   Get All Books
+ * @desc   Get All Tasks
  * @route  /api/v1/tasks
  * @method GET
  * @access public
@@ -17,12 +21,16 @@ const getAllTasks = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc   Creat New Task
+ * @desc   Create New Task
  * @route  /api/v1/tasks
  * @method POST
  * @access public
  */
-const creatTask = asyncHandler(async (req, res) => {
+const createTask = asyncHandler(async (req, res) => {
+  const { error } = validateCreateTask(req.body);
+  if (error) {
+    return res.status().json({ message: error.details[0].message });
+  }
   const task = new Task({
     content: req.body.content,
     completed: req.body.completed,
@@ -53,6 +61,10 @@ const getTask = asyncHandler(async (req, res) => {
  * @access public
  */
 const updateTask = asyncHandler(async (req, res) => {
+  const { error } = validateUpdateTask(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
   let task = await Task.findById(req.params.id);
   if (task) {
     task = await Task.findByIdAndUpdate(req.params.id, req.body, {
@@ -81,4 +93,4 @@ const deleteTask = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getAllTasks, creatTask, getTask, updateTask, deleteTask };
+module.exports = { getAllTasks, createTask, getTask, updateTask, deleteTask };
