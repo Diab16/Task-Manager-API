@@ -3,9 +3,14 @@ const mongoose = require("mongoose");
 // Task Schema
 const TaskSchema = new mongoose.Schema(
   {
-    content: {
+    title: {
       type: String,
       required: true,
+      trim: true,
+      maxlength: 300,
+    },
+    content: {
+      type: String,
       trim: true,
     },
     completed: {
