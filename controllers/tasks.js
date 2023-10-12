@@ -29,9 +29,11 @@ const getAllTasks = asyncHandler(async (req, res) => {
 const createTask = asyncHandler(async (req, res) => {
   const { error } = validateCreateTask(req.body);
   if (error) {
-    return res.status().json({ message: error.details[0].message });
+    return res.status(400).json({ message: error.details[0].message });
   }
+
   const task = new Task({
+    title: req.body.title,
     content: req.body.content,
     completed: req.body.completed,
   });

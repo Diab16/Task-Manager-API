@@ -26,21 +26,21 @@ const TaskSchema = new mongoose.Schema(
 );
 
 // validation create new task
-const validateCreateTask = (objet) => {
-  const schema = joi.objet({
+const validateCreateTask = (object) => {
+  const schema = joi.object({
     title: joi.string().trim().max(300).required(),
     content: joi.string().trim().max(1000),
   });
-  return schema.validate(objet);
+  return schema.validate(object);
 };
 // validation update task
-const validateUpdateTask = (objet) => {
-  const schema = joi.objet({
+const validateUpdateTask = (object) => {
+  const schema = joi.object({
     title: joi.string().trim().max(300),
     content: joi.string().trim().max(1000),
     completed: joi.boolean(),
   });
-  return schema.validate(Object);
+  return schema.validate(object);
 };
 
 const Task = mongoose.model("Task", TaskSchema);
