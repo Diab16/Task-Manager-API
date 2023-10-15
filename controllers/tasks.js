@@ -12,7 +12,20 @@ const {
  * @access public
  */
 const getAllTasks = asyncHandler(async (req, res) => {
-  const taskList = await Task.find();
+  const { searchString, completed } = req.query;
+  const queries = {};
+  queries.completed = completed === "true" ? true : false;
+  let taskList;
+  if (!searchString && !completed) taskList = await Task.find();
+  else {
+    if (!searchString) searchString = "";
+    taskList = await Task.find(
+      {
+        $text: { $search: searchString },
+      },
+      queries
+    ).select("title content completed");
+  }
   if (taskList) {
     res.status(200).json(taskList);
   } else {
