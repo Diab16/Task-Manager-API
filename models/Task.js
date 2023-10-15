@@ -24,6 +24,8 @@ const TaskSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+// Adding text index to Task Schema
+TaskSchema.index({ "$**": "text" });
 
 // validation create new task
 const validateCreateTask = (object) => {
